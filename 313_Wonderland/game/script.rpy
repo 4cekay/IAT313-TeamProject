@@ -24,7 +24,7 @@ define ch = Character ("[cat_name]")
 
 label start:
 
-    $ player_name = renpy.input("Enter your name.", default="Gwen", length=32)
+    $ player_name = renpy.input("Enter your name.", default="Gwen", length=12)
     $ player_name = player_name.strip()
 
     if not player_name:
