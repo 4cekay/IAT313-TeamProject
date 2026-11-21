@@ -1,4 +1,5 @@
-﻿init python:
+﻿# Initialization 
+init python:
     princess_name = "Princess"
     doll_name = "Doll Kid"
     cat_name = "Catboy"
@@ -21,37 +22,70 @@ define td = Character ("[doll_name]")
 define ch = Character ("[cat_name]")
 
 
-
+# Startup Sequence
 label start:
 
-    $ player_name = renpy.input("Enter your name.", default="Gwen", length=12)
+    $ player_name = renpy.input("Who are you?", default="Gwen", length=12)
     $ player_name = player_name.strip()
 
     if not player_name:
         $ player_name = "Gwen"
-
+    
+    "Always a pleasure, [player_name]."
+    "Now..."
+    "Rise and shine!"
 
     scene bg bedroom
     with fade
 
-    "This is your room."
+    mc "Ughhhh..."
 
-    mc "Oh girl, ew."
+    "Your eyes feel even heavier after a night's sleep."
 
-    "Yeah. Clean up while we meet the rest of the cast, why don't you?"
+    mc "(Psh, if you could even call it that...)"
 
-    mc "Hold on now--"
+    "Morning light spills through the blinds, starting your day off with yet another pesky chore."
+    "You bat an arm in the direction of the window, but the comfort of your bed refuses to release you."
+    
+    # BZZZZ sound effect 
+    "A fly terrorizes your ear, the feeling of gnats making your skin crawl awake."
 
-    "No time, we only got 4 weeks for this."
+    # RUSTLING sound effect
+    mc "(Lord!)"
 
     show bg shot_bedroom_mirror
     with dissolve
 
-    mc "This? What's this? What cast? Wait--"
+    mc "(I look like a banshee.)"
+    mc "(Why does my face look like it lost a fight?)"
+    mc "(Not to mention the disheveled bush on my head, ew.)"
 
-    "All in due time, [player_name]. Enjoy~!"
+    # [FADE TO BLACK]
 
-    mc "WAIT COME BA-"
+    # ROUGH HAIR BRUSHING sound effect
+    mc "(Come on... cooperate for ONCE...)"
+
+    # RUMMAGING, SHUFFLING sound effects
+    mc "(Where did I put my ID?)"
+    mc "(I swear I left that report on the desk.)"
+
+    # [SHOW LOOKING IN MIRROR CUTSCENE]
+    mc "(Well...)"
+
+    # [FADE TO BLACK]
+    # DOOR SHUT sound effect
+
+    mc "(At least I'll be on time!)"
+
+    # RUNNING DOWN THE HALL, DOWN THE STAIRS sound effects
+    "You fling yourself out the front door, right past the elevator to sprint down the back stairwell and out of the building."
+    
+    mc "You know what they say— )"
+    mc "(\"Better to be ugly and employed, than\")" 
+
+   
+
+    
 
     show bg shot_wonderland_transition
     with dissolve
