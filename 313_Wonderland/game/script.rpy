@@ -1,6 +1,6 @@
-﻿# Initialization 
+# Initialization 
 init python:
-    princess_name = "Princess"
+    princess_name = "Posh Voice"
     doll_name = "Doll Kid"
     cat_name = "Alley Cat"
 
@@ -8,6 +8,10 @@ init python:
     met_pr = False
     met_td = False
     met_ch = False
+
+    # Transition Credits: https://lemmasoft.renai.us/forums/viewtopic.php?t=69087
+    eyesopen = ImageDissolve("irismask", 0.25)
+    eyesclose = ImageDissolve("irismask", 0.1, reverse=True)
 
 
 
@@ -24,8 +28,10 @@ define ch = Character ("[cat_name]")
 # Effects Setup
 define flash = Fade(0.1, 0.0, 0.25, color="#fff")
 
+
 # Assets Setup
 image shot cat_food = Transform("/beginning_scenes/shot cat_food.png", xsize=1920, ysize=1080)
+image bg blue_wonderland_dark = Transform("/backgrounds/bg blue_wonderland_dark.png", xsize=1920, ysize=1080)
 
 
 # Startup Sequence
@@ -187,7 +193,7 @@ label dead_sprint_2:
     with fade
 
     mc "(You know what they say—)"
-    mc "(\"Better to be ugly and employed, than pretty and jobless.\")"
+    mc "(\"Better to be ugly {i}and{/i} employed, than pretty and {i}jobless.{/i}\")"
 
     # [CAR HONKS]
     show text "SFX: CAR HONKS" with flash
@@ -454,4 +460,324 @@ label alley_chase_3:
     
 label welcome_to_wonderland_4:
     # 4: Welcome to Wonderland
+    
+    scene black with dissolve
+
+    
+    # [LOUD PLOP ONTO GROUND]
+    show text "SFX: LOUD PLOP ONTO GROUND" with flash
+
+    menu:
+        "OW!":
+            pass
+    
+    mc "Oughhh..."
+    mc "That's gonna leave a mark."
+
+    "While waiting for the pounding in your head to quell, you realize the world has gone quiet."
+    "..."
+    "{i}Too quiet.{/i}"
+
+    mc "(There's no way it's this quiet outside at 7 A.M. on a weekday.)"
+
+    "As you begin to lift your head to investigate the lack of noise, you realize the rest of you needs lifting too."
+    "All at once, your senses zone back in, making you very aware of your current face-down, flat-as-a-pancake position on the ground."
+
+    menu:
+        "Get UP, loser!":
+            scene bg wonderland_dark with eyesopen
+            "You scramble up to your feet, dusting yourself off."
+            pass
+
+    scene black with eyesclose
+    mc "{i}Ohmygosh{/i}, this is so embarrassing."
+    mc "I really hope nobody saw that. {w}NOT my finest moment."
+
+    scene bg wonderland_dark with eyesopen
+    mc "Where even {i}are{/i} you, Charl-"
+    
+    scene bg wonderland with dissolve
+
+    mc "{w=1.0}... {w=0.5}\n...{w=0.5}\n..."
+
+    menu: 
+        mc "WHERE THE HELL AM I?"
+        "The alley..?":
+            mc "(No...)"
+            mc "(Not unless that alleyway was being used as a front by Willy Wonka.){w}\n(Or maybe the Lorax?)"
+            mc "(Oh my {i}god{/i}, [player_name]. Does it really matter right now?!)"
+            pass
+
+        "I'm getting punked.":
+            mc "Someone's gotta be playing a trick on me right now."
+            mc "(But who...?)"
+
+            "You start carefully down the path before you, eyes suspiciously narrowed as you examine your surroundings for signs of danger."
+
+            mc "...{w=0.5}Who am I kidding?"
+            mc "I have no friends to punk me!"
+            
+            "You laugh mockingly at yourself."
+            "Perhaps a little too loudly—A bird or two get startled out of the trees nearby."
+            "Either that, or they couldn't tell if you were laughing or crying and wanted to give you a moment."
+            pass
+
+        "I died.":
+            mc "{w=1.5}(My god...)"
+            mc "(I'm dead... aren't I?)"
+            mc "(It's the only reasonable explanation:){w}\n(I've died and gotten reincarnated in a 5-year-old's colouring book.)"
+            mc "(As PUNISHMENT for a life of mediocrity!)"
+            pass
+        
+    "You continue down the road, left with little options outside of marvelling at the mirage of colours making up the world around you."
+    mc "Seriously, what {i}is{/i} this place?"
+
+    $ cat_name = "???"
+
+    ch "{i}[player_name!u]{/i}?!"
+
+    "You whip around in the voice's direction immediately."
+
+    mc "Who's there?!"
+    mc "I-I've gotta warn you, you don't wanna mess with me!"
+    mc "{w=0.75}(Real convincing, [player_name]. {w=0.35}Now we're really gonna die.)"
+
+    "Nevertheless, you commit to it. What have you got to lose but your life at this point?"
+    mc " Don't come closer! I have a yellow belt in Karate!"
+    "You get into a flimsy stance, hands ready to chop at any threat."
+
+    "A nearby shuffle clues you in, and you squint as a scraggly cat-like person slowly emerges from behind cover."
+
+    mc "What the—"
+
+    "You drop the stance, taking a cautious step closer to the cloaked figure."
+
+    show charlie shy with dissolve
+
+    $ cat_name = "Cat?"
+    ch "What are you doing here, [player_name]?"
+
+    $ cat_name = "Person?"
+    ch "How did you even get here?"
+
+    mc "What—"
+    mc "Who are you?"
+    mc "How do you know my name?"
+
+    "Sensing fear in the creature instead, you slowly continue towards it for a closer look."
+
+    mc "Are those ears... real?"
+    mc "What even are you?"
+
+    "The creature winces and begans to back off."
+    "Its voice is uncharacteristically timid for a black-cloaked figure emerging from the shadows of Candyland."
+
+    $ cat_name = "Cat-Person?"
+    ch "We don't have time for all these questions, [player_name]. \nYou can't be here!"
+    ch "You have to go back from where you came!"
+
+    mc "And where is that?"
+
+    show charlie neutral with dissolve
+    "You back off from the creature and stomp back to the path, exaggeratedly looking around for a nonexistent exit before hollering back at it."
+
+    mc "As you can see, there aren't exactly any emergency exits around here!"
+    mc "I sorta just...{w=0.75} fell from the sky!"
+
+    "The cat-person groans and leaves its station to join you on the path."
+
+    show charlie angry
+    $ cat_name = "Annoyed Cat Person"
+    ch "You've gotta remember {i}something{/i}.\nPeople don't just end up in a place like this!"
+
+    mc "Well, I do, apparently!"
+    
+    show charlie neutral with dissolve
+    
+    "You can't tell whether you're laugh or crying anymore, either."
+
+    mc "I shouldn't even be here!\nI've definitely missed my bus now, dammit!"
+
+    "With no regard for the cat-like person behind you, you begin staggering down the path as your frustrations boil over."
+
+    $ cat_name = "Cat Person"
+    ch "W-Wait up!"
+
+    "You don't even turn around when you hear another pair of footsteps start following after yours."
+
+    mc "I don't even know if I {i}can{/i} get to work at this rate!"
+    mc "All I did was follow my cat into an alley—"
+
+    ch "{i}[player_name]{/i}..."
+    "The creature's voice softens in a way you've heard far too often from the people in your life this year."
+    "It feels sorry for you."
+
+    mc "(Right.)"
+    
+    "You slump down onto ground, right in the middle of the path."
+
+    $ eyesclose = ImageDissolve("irismask", 0.5, reverse=True)
+    scene black with eyesclose
+
+    mc "I followed my cat.{w}\nMy {i}dead{/i} cat.{w}\nInto a dark, creepy alleyway!"
+    mc "I'm crazy, cat-dude!"
+    mc "I don't know what I'm doing or why I'm even here!"
+
+    "You bury your face in your hands, trying very hard not to have a total meltdown in the most colourful place on earth."
+    "You hear some soft steps around you, and when you open your eyes..."
+
+    $ eyesopen = ImageDissolve("irismask", 0.75)
+    scene bg wonderland_dark with eyesopen
+    show charlie neutral_one_hand with dissolve
+
+    "The cloaked creature is crouched down with you, one clawed hand outstretched."
+
+    ch "Come on, [player_name]."
+
+    "You could almost laugh at how incredulous it all feels as you take the creature's hand."
+
+    mc "How do you even know my name again—?"
+
+    "The creature hesitates, averting its single-eyed gaze away for a second as a thought creeps up on you."
+
+    show shot cat_flashback with flash
+    pause 1.5
+    show shot cat_chase_flashback with flash
+    pause 1.5
+    show shot gwen_squeeze_flashback with flash
+    pause 1.5
+    show shot wonderland_transition_flashback with flash
+    pause 1.5 
+
+    scene bg wonderland_dark with dissolve
+    show charlie neutral_hood
+
+    menu:
+        "Charlie?":
+            mc "Could it really be you?"
+            pass
+    
+    $ cat_name = "Charlie?"
+
+    show charlie shy with dissolve
+    ch "[player_name]..."
+
+    "You take in the creature's appearance in its entirety for a second."
+    "Its posture."
+    "Its ears."
+    "Those claws."
+    mc "(That collar...)"
+
+    mc "{w=1.25}It's really you, isn't it?"
+    mc "You're my Charlie."
+
+    $ cat_name = "Charlie"
+
+    show charlie neutral with dissolve
+
+    ch "..."
+    ch "[player_name], I know this is a lot to take in."
+
+    mc "Your eye."
+
+    ch "...!"
+
+    mc "You got that scar from a nasty stray, right before we rescued you."
+
+    "A flood of emotions begin to fill you, and your hand trembles in Charlie's clawed, yet soft grip."
+
+    mc "(I can't believe it.)"
+
+    "You finally stand up, not letting go of Charlie's hand."
+    "You can barely resist the urge to wrap the scruffy little one before you in the biggest hug; if only it wouldn't risk scaring him away."
+
+    mc "How is this even possible? I feel like I'm dreaming..."
+    "Your voice is audibly watery now, but you don't care."
+
+    mc "(Does it even matter right now?)"
+
+    menu:
+        "I have Charlie back.":
+            mc "I've missed you so much, did you know that?"
+            mc "I never thought I'd get to tell you that again."
+            
+            "Despite the tears now spilling from your eyes, you break into the realest smile you've worn in months."
+            pass
+
+    ch "[player_name], I'm so sorry."
+
+    mc "No! Nothing was your fault, buddy, not ever."
+    mc "I'm just glad to be here with you again."
+
+    scene bg wonderland with dissolve
+    "You finally notice the colourful world surrounding you both once more."
+
+    mc "Wherever {i}here{/i} even is, haha."
+
+    "Charlie averts his gaze, looking down at his feet as he gently takes his hand out of your grasp." 
+    show charlie neutral_one_hand with dissolve
+    "His expression is somber in a way you had yet to see."
+
+    ch "That's just the thing."
+    ch "You can't be here with me, [player_name]."
+
+    "You shake your head, shooting down his negativity right away."
+
+    mc "I'm literally right here, Charlie."
+    mc "And now that we're together again, I'm not leaving your side if I can help it!"
+
+    show charlie neutral
+
+    ch "Huh? No, I—"
+
+    "You take his hand before he can say another word, a watery laugh escaping you as you pull him along the path, past rows upon rows of luminscent flora."
+    
+    mc "Loosen up, buddy!"
+    mc "You're here with me again, and now we have this entire world to explore together!"
+    mc "Totally beats the morning rush, if you ask me."
+
+    ch "[player_name], you're not listening to me."
+    show charlie angry with dissolve 
+    ch "You can't stay here!"
+
+    mc "Yes, I can! There isn't even a way out!"
+    mc "{w=1.0}Maybe this was meant to be."
+    mc "Like the universe wanted to give us some more time together."
+
+    show charlie neutral_one_hand with dissolve
+
+    ch "[player_name]..."
+    ch "...{w=0.75}You know that's impossible. You don't belong he—"
+
+    show charlie neutral
+
+    "You cut him off before he can say the words you don't want to hear right now. You steel yourself as you march on forward, taking Charlie in the direction of a rainbow mushroom cluster."
+    "You look back to him over your shoulder as you walk, forcing a grin in an effort to lift his mood."
+
+    scene bg blue_wonderland with dissolve
+    mc "Look at those things! Are they native to this place?"
+
+    "The only reply you hear is a startled gasp before you feel yourself collide with something {i}poofy{/i}," 
+    show black with flash
+    
+    "...Sending yourself back to the ground in an inelegant tumble."
+    
+    pr "Oh my—!"
+
+    mc "{w=1}...{w=1}Urgh."
+    mc "(Not again...)"
+
+    pr "Now, what adorable thing has the cat dragged in this time~?"
+
+    "An almost sing-songy voice rings above you, and before you can even look up, you feel a shadow looming over you."
+
+    scene bg blue_wonderland_dark with eyesopen
+    pause 1.0
+    show princess smile_both_hands with dissolve
+    pause 1.0
+
+    $ princess_name = "???"
+    pr "And who might you be?"
+
+
     return
