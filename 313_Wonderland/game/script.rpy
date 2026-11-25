@@ -4,15 +4,14 @@ init python:
     doll_name = "Doll Kid"
     cat_name = "Alley Cat"
 
-    met_all = False
-    met_pr = False
-    met_td = False
-    met_ch = False
+    charlie_bad_1 = False
+    charlie_bad_2 = False
+    charlie_bad_3 = False
+
 
     # Transition Credits: https://lemmasoft.renai.us/forums/viewtopic.php?t=69087
     eyesopen = ImageDissolve("irismask", 0.25)
     eyesclose = ImageDissolve("irismask", 0.1, reverse=True)
-
 
 
 # Player Character Setup
@@ -532,6 +531,10 @@ label welcome_to_wonderland_4:
     "You continue down the road, left with little options outside of marvelling at the mirage of colours making up the world around you."
     mc "Seriously, what {i}is{/i} this place?"
 
+    jump meeting_charlie_5
+
+label meeting_charlie_5:
+
     $ cat_name = "???"
 
     ch "{i}[player_name!u]{/i}?!"
@@ -754,6 +757,10 @@ label welcome_to_wonderland_4:
     "You cut him off before he can say the words you don't want to hear right now. You steel yourself as you march on forward, taking Charlie in the direction of a rainbow mushroom cluster."
     "You look back to him over your shoulder as you walk, forcing a grin in an effort to lift his mood."
 
+    jump meeting_princess_6
+
+label meeting_princess_6:
+
     scene bg blue_wonderland with dissolve
     mc "Look at those things! Are they native to this place?"
 
@@ -777,7 +784,48 @@ label welcome_to_wonderland_4:
     pause 1.0
 
     $ princess_name = "???"
-    pr "And who might you be?"
 
+    "Scrambling up, you're met with the sight of a princess—a real life princess—towering over you with her, looking down with a curious glint in her eye."
+    "You do a double take, glancing behind you before realizing that by \"adorable thing\", she meant {i}you{/i}." 
+
+    mc "(Poofy dress, {w=0.5}perfect hair, {w=0.5}shoes worth more than my apartment, probably.)"
+
+    "You suddenly feel {i}very{/i} self-conscious.\nAnd a little starstruck."
+
+    mc "...You're a princess. Like a {i}Princess{/i} princess."
+
+    "She laughs at your astonishment, helping you up."
+    show princess neutral with dissolve
+
+    mc "(God, even her laugh is melodic.)"
+    mc "(Do you think she can talk to birds? {w}Should I ask?)"
+
+    "Dusting yourself off, you realize that your hand had slipped from Charlie's."
+
+    mc "Oh, you mentioned a cat. Charlie, do you know—"
+
+    "You turn back to Charlie, who may as well have vanished into thin air."
+
+    mc "Charlie?"
+
+    pr "Hm? Are you looking for someone?"
+
+    mc "I— He was right here, I don't underst—"
+
+    "The Princess chuckles and pats you on the head."
+
+    pr "That's no matter, sweetie."
+    pr "Lucky for you, you just met the only one you'll need from now on!" 
+
+    "Her tone is so lighthearted, it's almost too easy to overlook how creepily those words could be taken."
+
+
+
+    
+    
+
+[MC] is in awe, starstruck until the figure notices her and approaches. Upon closer inspection, the she finds her own face smiling down at her. 
+
+[PRINCESS] passive-aggressively comments on [MC]’s appearance, saying she could make a fixer-upper out of her. 
 
     return
