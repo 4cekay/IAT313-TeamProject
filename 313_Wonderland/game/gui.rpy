@@ -87,8 +87,11 @@ define gui.title_text_size = 75
 ## Main and Game Menus #########################################################
 
 ## The images used for the main and game menus.
-define gui.main_menu_background = "gui/main_menu.png"
-define gui.game_menu_background = "gui/game_menu.png"
+
+## Reference: https://www.reddit.com/r/RenPy/comments/1xzpxsp/how_to_add_webm_looped_video_in_game_menu_in/
+image menu_screen = Movie(channel="movie_dp", play = "images/maincover.webm", size=(1920, 1080))
+define gui.main_menu_background = "menu_screen"
+define gui.game_menu_background = "menu_screen"
 
 
 ## Dialogue ####################################################################
