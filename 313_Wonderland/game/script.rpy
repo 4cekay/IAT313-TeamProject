@@ -12,12 +12,19 @@ init python:
     flash = Fade(0.1, 0.0, 0.25, color="#fff")
     flash_princess = Fade(0.05, 0.0, 0.25, color="#fffad556")
     flash_teddy = Fade(0.05, 0.0, 0.15, color="#93e8ff56")
+    flash_charlie = Fade(0.05, 0.0, 0.15, color="#ff989856")
 
+    # Flashback Fade
+    flashback_princess = Fade(0.25, 0.0, 0.5, color="#fffad5ff")
+    flashback_charlie = Fade(0.25, 0.0, 0.5, color="#ff9898ff")
+    flashback_teddy = Fade(0.25, 0.0, 0.5, color="#93e8ffff")
 
     # Transition Credits: https://lemmasoft.renai.us/forums/viewtopic.php?t=69087
     eyesopen = ImageDissolve("irismask", 0.25)
     eyesclose = ImageDissolve("irismask", 0.1, reverse=True)
 
+    # Sepia Filter
+    sepia_mode = False
 
 # Player Character Setup
 define mc = Character("[player_name]")
@@ -33,12 +40,39 @@ define ch = Character ("[cat_name]")
 image shot cat_food = Transform("/beginning_scenes/shot cat_food.png", xsize=1920, ysize=1080)
 image bg street_blurry = Transform("/backgrounds/bg street_blurry.png", xsize=1920, ysize=1080)
 image bg blue_wonderland_dark = Transform("/backgrounds/bg blue_wonderland_dark.png", xsize=1920, ysize=1080)
+image bg blue_wonderland_twisted_dark = Transform("/backgrounds/bg blue_wonderland_twisted_dark.png", xsize=1920, ysize=1080)
+image bg pink_wonderland_dark = Transform("/backgrounds/bg pink_wonderland_dark.png", xsize=1920, ysize=1080)
 image bg castle_exterior = Transform("/backgrounds/bg castle_exterior.png", xsize=1920, ysize=1080)
 image bg castle_exterior_dark = Transform("/backgrounds/bg castle_exterior_dark.png", xsize=1920, ysize=1080)
 image bg castle_interior_coveredmirror = Transform("/backgrounds/bg castle_interior_coveredmirror.png", xsize=1920, ysize=1080)
 image bg castle_interior_coveredmirror_dark = Transform("/backgrounds/bg castle_interior_coveredmirror_dark.png", xsize=1920, ysize=1080)
 image bg green_wonderland = Transform("/backgrounds/bg green_wonderland.png", xsize=1920, ysize=1080)
 image bg green_wonderland_dark = Transform("/backgrounds/bg green_wonderland_dark.png", xsize=1920, ysize=1080)
+image bg green_wonderland_twisted_dark = Transform("/backgrounds/bg green_wonderland_twisted_dark.png", xsize=1920, ysize=1080)
+
+
+# Filters
+transform sepia_filter:
+    matrixcolor (TintMatrix("#a98869") * SaturationMatrix(0.25) if sepia_mode else IdentityMatrix())
+
+# Three-Sprite Positioning
+transform split_left:
+    xanchor 0.5
+    xpos 0.20
+    yalign 1.0
+    zoom 0.9  
+
+transform split_center:
+    xanchor 0.5
+    xpos 0.50
+    yalign 1.0
+    zoom 0.9
+
+transform split_right:
+    xanchor 0.5
+    xpos 0.80
+    yalign 1.0
+    zoom 0.9
 
 
 # Startup Sequence
@@ -176,8 +210,6 @@ label morning_rush_1:
     mc "(At least I’ll be on time!)"
 
     jump dead_sprint_2
-
-
 
 label dead_sprint_2:
     # 2: Dead Sprint
@@ -1183,6 +1215,7 @@ label meeting_teddy_7:
             "Teddy yelps as you tag him, before dissolving into deeply contagious laughter."
             mc "(I haven't laughed like this in forever...)"
 
+    show bg green_wonderland with dissolve
     td "Aw, man! You win!" 
     td "I demand a rematch!"
 
@@ -1207,24 +1240,187 @@ label meeting_teddy_7:
     
 label point_of_no_return:
     
+    scene bg blue_wonderland_dark with fade
 
+    show charlie neutral_hood with flash_charlie
+    ch "...!"
+
+    pause 0.75
+    show charlie shy with dissolve
+    pause 0.5
+    hide charlie with flash_charlie
+
+    mc "(Charlie!)"
+
+    show bg blue_wonderland with dissolve
+    "Before you can bolt after him, Charlie disappears into a small forest of candied flora in the distance."
+
+    show bg green_wonderland_dark with dissolve
+    show teddy frown with dissolve
+    "You turn to Teddy, suppressing a few obscenities in the face of the little boy, and force out what you hope is a cheeky grin."
+
+    mc "Why don't you warm up, Teddy?"
+    mc "I'll catch up with ya later, after I go check on something!"
+
+    show teddy frown_tilt
+    td "You promise?"
+
+    "He holds out stitched-up pinky."
+    "You link your littlest finger with his..."
+
+    mc "Promise."
+
+    "...then take off in Charlie's direction."
+
+    scene bg wonderland with fade
+
+    mc "CHARLIE!"
+
+    show bg wonderland_dark with dissolve 
+
+    mc "Dammit..."
+    mc "I lost him."
+
+    "You find yourself atop a hill overlooking the rest of this wondrous, vibrant land."
+    show bg wonderland with dissolve
+
+    "Time had flown, but it doesn't hit you until now just how {i}exhausting{/i} all the running around has been."
+    "You can't help but chuckle as you hunch over to catch your breath."
+
+    mc "What the hell kind of day has this been, seriously..."
+
+    "You glance up, finding your eyes wandering to the right."
+
+    show bg blue_wonderland with dissolve 
+    "They follow the cascade of cotton candy-hued hills..."
+    pause 0.5
+    show bg blue_wonderland_dark with dissolve
+    "...that hold the time last spent with a precious pal."
+    pause 0.5
+    
+    $ sepia_mode = True
+    show bg blue_wonderland_twisted_dark at sepia_filter with flashback_charlie
+    show charlie neutral_one_hand at sepia_filter with dissolve
+
+    ch "..."
+    ch "[player_name], I know this is a lot to take in."
+
+    mc "Your eye."
+
+    ch "...!"
+
+    mc "You got that scar from a nasty stray, right before we rescued you."
+    pause 0.75
+
+    hide charlie with dissolve
+    $ sepia_mode = False
+    show bg wonderland at sepia_filter with flashback_charlie
+
+    pause 0.75
+    
+    show bg pink_wonderland with dissolve
+    "Your eyes trail up the pink-stained land gleaming with crystals..."
+    pause 0.75
+    show bg castle_exterior with dissolve
+    "...all the way up to a magnificent castle that towers above all."
+
+    pause 0.75
+    $ sepia_mode = True
+    show bg pink_wonderland_dark at sepia_filter with flashback_princess
+    show princess smile_both_hands at sepia_filter with dissolve
+    pr "Well anyhow, no need to dwell on that insignificant nonsense now that you’ve met the only one you'll ever need around here!"
+
+    show princess surprise at sepia_filter with dissolve
+    pr "You best make up your mind quickly, though!"
+
+    $ sepia_mode = False
+    hide princess with dissolve 
+    show bg wonderland at sepia_filter with flashback_princess
+
+    "Finally, you gaze upon fresh green fields of youth..."
+    show bg green_wonderland with dissolve
+    pause 1
+    show bg green_wonderland_dark with dissolve
+    "...where happier times live, with the friend you'd never forgotten."
+    pause 0.75
+
+    $ sepia_mode = True
+    show bg green_wonderland_twisted_dark at sepia_filter with flashback_teddy
+
+    show teddy frown_tilt at sepia_filter with dissolve
+    td "Remember when you'd come over and play? It would always cheer you up!"
+    td "You look so tired now...{w}and I missed you!"
+    td "So just one more game? {w=0.75}{i}Pleeeeease?{/i}"
+
+    hide teddy with dissolve
+    $ sepia_mode = False
+    show bg wonderland at sepia_filter with flashback_teddy
+
+    "Emotions well up in your chest as you look upon the horizon and recall the unforgettable encounters you've had in this peculiar land."
+
+    show bg wonderland_dark with dissolve
+    
+    show charlie smile with dissolve
+    "A lost companion, found once more..."
+    hide charlie with dissolve
+
+    show princess smile with dissolve
+    "Wildest dreams made reality..."
+    hide princess with dissolve
+
+    show teddy smile with dissolve
+    "The gateway to better times living only in memory..."
+    hide teddy with dissolve
+
+    show charlie neutral at split_left
+    show princess neutral at split_center
+    show teddy neutral at split_right
+    with dissolve
+
+    "The inexplicable draw in your heart has become impossible to ignore."
+    "For the first time, you are certain of where the road before you leads."
 
     menu: 
-        "meeting_teddy_7":
-            jump meeting_teddy_7
-        "princess_route_8":
-            jump princess_route_8
-        "teddy_route_8":
-            jump teddy_route_8
-        "charlie_route_8":
+        "To the forest, reuniting with Charlie at last.":
+            hide princess
+            hide teddy
+            with dissolve
+
+            show charlie neutral_hood at center with dissolve
+            pause 1.5
+
             jump charlie_route_8
 
+        "To the castle, where the Princess awaits your presence.":
+            hide charlie
+            hide teddy
+            with dissolve
+
+            show princess smile_both_hands at center with dissolve
+            pause 1.5
+
+            jump princess_route_8
+
+        "To the greener grass, for sunnier days with Teddy.":
+            hide charlie
+            hide princess
+            with dissolve
+
+            show teddy candy_hands at center with dissolve
+            pause 1.5
+
+            jump teddy_route_8
+    
+
 label princess_route_8:
+    "Are you sure?"
 
 label teddy_route_8:
+    "Are you sure?"
 
 label charlie_route_8:
 
+    "Are you sure?"
             
 
     return
