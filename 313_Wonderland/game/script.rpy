@@ -23,37 +23,64 @@ init python:
     eyesopen = ImageDissolve("irismask", 0.25)
     eyesclose = ImageDissolve("irismask", 0.1, reverse=True)
 
-    # Sepia Filter
+    # Filter Modes
     sepia_mode = False
+    princess_mode = False
 
 # Player Character Setup
 define mc = Character("[player_name]")
 
 # Story Characters Setup
 define pr = Character("[princess_name]")
-
 define td = Character ("[doll_name]")
-
 define ch = Character ("[cat_name]")
 
 # Assets Setup
 image shot cat_food = Transform("/beginning_scenes/shot cat_food.png", xsize=1920, ysize=1080)
 image bg street_blurry = Transform("/backgrounds/bg street_blurry.png", xsize=1920, ysize=1080)
+
 image bg blue_wonderland_dark = Transform("/backgrounds/bg blue_wonderland_dark.png", xsize=1920, ysize=1080)
 image bg blue_wonderland_twisted_dark = Transform("/backgrounds/bg blue_wonderland_twisted_dark.png", xsize=1920, ysize=1080)
 image bg pink_wonderland_dark = Transform("/backgrounds/bg pink_wonderland_dark.png", xsize=1920, ysize=1080)
-image bg castle_exterior = Transform("/backgrounds/bg castle_exterior.png", xsize=1920, ysize=1080)
-image bg castle_exterior_dark = Transform("/backgrounds/bg castle_exterior_dark.png", xsize=1920, ysize=1080)
-image bg castle_interior_coveredmirror = Transform("/backgrounds/bg castle_interior_coveredmirror.png", xsize=1920, ysize=1080)
-image bg castle_interior_coveredmirror_dark = Transform("/backgrounds/bg castle_interior_coveredmirror_dark.png", xsize=1920, ysize=1080)
 image bg green_wonderland = Transform("/backgrounds/bg green_wonderland.png", xsize=1920, ysize=1080)
 image bg green_wonderland_dark = Transform("/backgrounds/bg green_wonderland_dark.png", xsize=1920, ysize=1080)
 image bg green_wonderland_twisted_dark = Transform("/backgrounds/bg green_wonderland_twisted_dark.png", xsize=1920, ysize=1080)
 
+image bg castle_exterior = Transform("/backgrounds/bg castle_exterior.png", xsize=1920, ysize=1080)
+image bg castle_exterior_dark = Transform("/backgrounds/bg castle_exterior_dark.png", xsize=1920, ysize=1080)
+image bg castle_interior_nomirror = Transform("/backgrounds/bg castle_interior_nomirror.png", xsize=1920, ysize=1080)
+image bg castle_interior_nomirror_dark = Transform("/backgrounds/bg castle_interior_nomirror_dark.png", xsize=1920, ysize=1080)
+image bg castle_interior_coveredmirror = Transform("/backgrounds/bg castle_interior_coveredmirror.png", xsize=1920, ysize=1080)
+image bg castle_interior_coveredmirror_dark = Transform("/backgrounds/bg castle_interior_coveredmirror_dark.png", xsize=1920, ysize=1080)
+image bg castle_interior_coveredmirror_darker = Transform("/backgrounds/bg castle_interior_coveredmirror_darker.png", xsize=1920, ysize=1080)
+image bg castle_interior_coveredmirror_evendarker = Transform("/backgrounds/bg castle_interior_coveredmirror_evendarker.png", xsize=1920, ysize=1080)
+image bg castle_interior_coveredmirror_neardarkest = Transform("/backgrounds/bg castle_interior_coveredmirror_neardarkest.png", xsize=1920, ysize=1080)
+image bg castle_interior_coveredmirror_darkest = Transform("/backgrounds/bg castle_interior_coveredmirror_darkest.png", xsize=1920, ysize=1080)
 
-# Filters
+image mc princess_1 = Transform("/princess_route/mc princess_1.png", xsize=802, ysize=1080)
+image princess lipstick = Transform("/princess_route/princess lipstick.png", xsize=1920, ysize=1080)
+image princess lipstick_smear = Transform("/princess_route/princess lipstick_smear.png", xsize=1920, ysize=1080)
+
+image teddy crying = Transform("/teddy_route/teddy crying.png", xsize=1920, ysize=1080)
+image shot teddy_1 = Transform("/teddy_route/shot teddy_1.png", xsize=1920, ysize=1080)
+image shot teddy_2 = Transform("/teddy_route/shot teddy_2.png", xsize=1920, ysize=1080)
+image shot teddy_3 = Transform("/teddy_route/shot teddy_3.png", xsize=1920, ysize=1080)
+image shot teddy_4 = Transform("/teddy_route/shot teddy_4.png", xsize=1920, ysize=1080)
+
+image bg end_frame_crack = Transform("bg end_frame_crack.png", xsize=1920, ysize=1080)
+image bg end_frame_nocrack = Transform("bg end_frame_nocrack.png", xsize=1920, ysize=1080)
+
+
+# Filters / Effects
 transform sepia_filter:
     matrixcolor (TintMatrix("#a98869") * SaturationMatrix(0.25) if sepia_mode else IdentityMatrix())
+
+transform princess_filter:
+    #matrixcolor (TintMatrix("#e5b4ebd2") * SaturationMatrix(0) if princess_mode else IdentityMatrix())
+    xanchor 0.5
+    xpos 0.50
+    yalign 0.5
+    zoom 0.6
 
 # Three-Sprite Positioning
 transform split_left:
@@ -74,6 +101,14 @@ transform split_right:
     yalign 1.0
     zoom 0.9
 
+transform zoom:
+    yalign 2
+    zoom 1.5
+
+transform zoom_out:
+    xpos 0.25
+    ypos 0
+    zoom 0.5
 
 # Startup Sequence
 label start:
@@ -1372,6 +1407,9 @@ label point_of_no_return:
     "The gateway to better times living only in memory..."
     hide teddy with dissolve
 
+    jump final_choice
+
+label final_choice: 
     show charlie neutral at split_left
     show princess neutral at split_center
     show teddy neutral at split_right
@@ -1389,7 +1427,16 @@ label point_of_no_return:
             show charlie neutral_hood at center with dissolve
             pause 1.5
 
-            jump charlie_route_8
+            menu:
+                "Are you sure?"
+                "Yes.":
+                    "Your ending has been written."
+                    jump charlie_route_8
+
+                "NO WAIT GO BACK!":
+                    "PLEASE click carefully, we don't have all day."
+                    jump final_choice
+
 
         "To the castle, where the Princess awaits your presence.":
             hide charlie
@@ -1399,7 +1446,16 @@ label point_of_no_return:
             show princess smile_both_hands at center with dissolve
             pause 1.5
 
-            jump princess_route_8
+            menu:
+                "Are you sure?"
+                "Yes.":
+                    "Your ending has been written."
+                    jump princess_route_8
+
+                "NO WAIT GO BACK!":
+                    "PLEASE click carefully, we don't have all day."
+                    jump final_choice
+            
 
         "To the greener grass, for sunnier days with Teddy.":
             hide charlie
@@ -1409,18 +1465,660 @@ label point_of_no_return:
             show teddy candy_hands at center with dissolve
             pause 1.5
 
-            jump teddy_route_8
-    
+            menu:
+                "Are you sure?"
+                "Yes.":
+                    "Your ending has been written."
+                    jump teddy_route_8
+
+                "NO WAIT GO BACK!":
+                    "PLEASE click carefully, we don't have all day."
+                    jump final_choice        
 
 label princess_route_8:
-    "Are you sure?"
+    scene bg castle_exterior with fade
+
+    "You arrive at the castle entrance. Even looking up at the tall doors fills you with a strong sense of inadequacy."
+
+    mc "(Do I just knock? This place is {i}way{/i} too fancy for me.)"
+
+    show bg castle_exterior_dark with dissolve
+    "One firm thump of the door-knocker is enough to echo through the gates."
+    "Almost instantly, there's a scramble of panicked rustling from within. You're ushered inside not even a moment after the doors open."
+
+    scene bg castle_interior_coveredmirror with fade
+
+    "...And find yourself left alone in a very, very bright pink room."
+
+    mc "(Funny, I almost miss the colourful eyesore of the world outside.)"
+    pause 1.0
+
+    show bg castle_interior_coveredmirror_dark with dissolve
+    # SFX: HEELS CLICK-CLACK DOWN THE HALLWAY
+    show text "SFX: HEELS CLICK-CLACK DOWN THE HALLWAY" with dissolve
+    pause 0.75
+
+    # SFX: DOOR SLAMS OPEN
+    show text "SFX: DOOR SLAMS OPEN" with flash
+
+    mc "...!"
+
+    show princess smile_one_hand with dissolve
+    "The Princess makes her grand entrance, still issuing orders to one of her many staff."
+    pr "—and set that table, promptly."
+
+    show princess neutral with dissolve
+    "When her eyes land on you, one could only describe her as inexplicably pleased with herself."
+
+    show princess neutral_both_hands with dissolve
+    pr "Welcome [player_name]!"
+    pr "I knew you had a little smarts in that head of yours!"
+
+    mc "Thanks again for the invite." 
+    mc "This room is very... {w}pink!"
+    
+    show bg castle_interior_coveredmirror with dissolve
+    show princess surprise_both_hands
+    pr "I know, isn't it lovely?"
+    pr "And you will have your very own room here! How exciting."
+    
+    "You blink in confusion."
+
+    mc "Oh, I’m just visiting for the day."
+
+    show princess smile with dissolve
+    "The princess laughs, stepping into a closet and rummaging around."
+    pause 0.75
+    hide princess with dissolve
+
+    pr "Don’t be silly." 
+    pr "How could you leave? Anything you could ever want is right here."
+
+    show bg castle_interior_coveredmirror_dark with dissolve
+    mc "..."
+    mc "(I guess she isn’t wrong?)"
+
+    show princess surprise_both_hands with dissolve
+    "The princess emerges from the closet moments later, shoving a pink dress into your hands with a dazzling grin."
+
+    show bg castle_interior_coveredmirror with dissolve
+
+    pr "Well? Go on and change!"
+
+    show princess smile_both_hands
+    pr "It’s pink, just like me. We’ll match!"
+
+    mc  "Wait, for me? No no, I couldn't—"
+
+    show princess smile with dissolve
+    pr "Of course it's for you, silly."
+
+    show princess smile at zoom with dissolve  
+    "The Princess leans in closer, her gaze unsettling."
+    show princess neutral at zoom with dissolve
+
+    show bg castle_interior_coveredmirror_dark with dissolve
+    pr "All of it is for you."
+    pr "Anything, and everything, {w}\nthat you could ever possibly want..."
+    pr "{w=0.75}...[player_name]."
+
+    hide princess with dissolve
+
+    show bg castle_interior_coveredmirror with dissolve
+    "With a flick of her wrist, the princess whisks the sheet away from the mirror."
+    pause 0.35
+    show bg castle_interior_nomirror with dissolve
+    pause 0.25
+    show mirror sprite at zoom_out with flash_princess
+    pause 0.75
+    
+    "There you stand beside her, the two of you framed in gilded glass."
+
+    hide mirror with dissolve
+    "She holds the dress over your body, sizing you up in the mirror."
+    pause 0.75
+
+    show princess neutral at left with dissolve
+
+    pr "It's perfect, isn't it?"
+
+    "The princess smiles at your reflection, her lips tilting up in a familiar way."
+    "For the first time, you notice how similar some of your features are."
+
+    show mc princess_1 at right with dissolve
+    "Studying her expression, you try to mimic her smile."
+    
+    pause 1.0
+    hide mc
+    show princess smile_both_hands 
+    with dissolve
+
+    pr "Well, put it on then!"
+
+    "She leaves the dress in your hands, strolling over to the door."
+
+    hide princess with dissolve
+
+    pr "Don’t keep me waiting too long~"
+
+    "With a rustle of silk, the door closes with a gentle click—"
+    "and she's gone."
+
+    "You meet your own gaze back in the glass, and the difference is striking now that you're alone:" 
+    show bg castle_interior_nomirror_dark with dissolve
+    "The polished appearance you lack; the poise you couldn't fake if you tried."
+
+    mc "(Can I really wear something so pink and eye-catching?)"
+    mc "(Even if I put it on, it won’t look as good on me.)"
+
+    "You glance over at the closed door, knowing the Princess waits behind it."
+    
+    mc "Just hurry up, [player_name]. Stop overthinking."
+    mc "(She wouldn't think twice about this.)"
+
+    pause 1.5
+    # SFX: GETTING DRESSED FABRIC 
+
+    "You examine your appearance in the mirror, running your hands over the new outfit."
+
+    mc "This is kind of pretty, I think. Maybe I should put a little more effort in the mornings."
+
+    "A dainty knock sounds on the other side of the door."
+
+    pr "Are you finished? I’m coming in!"
+
+    show bg castle_interior_nomirror with dissolve
+    show princess neutral with dissolve
+    "Stepping back inside, the Princess looks you over, before humming with half-hearted satisfaction."
+
+    show princess neutral_one_hand with dissolve
+    pr "Well... {w=1}it’s certainly a {i}start!{/i}" 
+
+    show princess surprise_both_hands with dissolve
+    pr "But don’t you just feel so much better already?"
+
+    show bg castle_interior_nomirror_dark with dissolve
+    hide princess with dissolve
+    "She steps in front of you, blocking your view of the mirror while throwing the cover back on."
+
+    show bg castle_interior_coveredmirror_dark with dissolve
+
+    mc "(Oh, okay.)"
+    mc "(I wasn’t really done looking, but I guess it {i}is{/i} her mirror?)"
+    
+    pause 0.75
+
+    show princess smile_both_hands with dissolve
+    pr "No need for that thing anymore!"
+    show princess smile_one_hand with dissolve
+    pr "At least not while I'm here to give your lucky little self allll the tips you could possibly need!"
+
+    show princess neutral_one_hand
+    mc "Ah, alright then."
+    mc "I’m just not sure if stuff like this really suits me."
+
+    show princess surprise_both_hands with dissolve
+    pr "Not {i}yet{/i}, it doesn't!"
+    pr "But just you wait, the makeover has yet to be completed."
+    
+    show bg castle_interior_coveredmirror_darker with dissolve
+    hide princess with dissolve
+
+    pause 1.5
+    #SFX: MAKEUP BRUSHING AND STUFF
+
+    pr "We’ll just have to give you a little makeup, {w=0.85}fill in those gaunt cheeks."
+
+    $ princess_mode =  True
+    show mc princess_filtered_1 at princess_filter with dissolve
+
+    pr "Isn’t this just so. {w=0.5}Much. {w=0.5}Better!"
+
+    mc "Really? Do I look pretty now?"
+
+    hide mc with dissolve
+
+    show princess smile_both_hands with dissolve
+    "The Princess laughs, a hand flying up to cover her mouth."
+    "Your eyes catch on her nails: perfectly groomed and lacquered."
+
+    pr "Are you seriously doubting me?"
+
+    show princess surprise_one_hand with dissolve
+    pr "Why, we could almost be twins!"
+
+    show princess smile_one_hand
+    pr "We’ll have your nails done of course—there’s absolutely no room for sloppiness."
+
+    show bg castle_interior_coveredmirror_evendarker with dissolve
+    hide princess with dissolve
+
+    pause 2.0
+    #SFX: INCREASINGLY CONCERNING TINKERING NOISE
+    
+    show mc princess_2 at princess_filter with dissolve
+
+    "You admire your nails, freshly painted with a coat of bubblegum pink."
+
+    mc "(I wonder why I was so hesitant before.)"
+    mc "(I look so much better~!)"
+
+    hide mc with dissolve
+
+    show princess smile_one_hand with dissolve
+    pr "That’s more like it!" 
+
+    show princess surprise_one_hand
+    pr "Now, for a finishing touch:"
+
+    show bg castle_interior_coveredmirror_neardarkest with dissolve
+    hide princess with dissolve
+
+    pause 2.0
+    #SFX: LIPSTICK CAP, FOOTSTEPS GETTING CLOSER
+    
+    pr "Every princess needs a signature look, and it’s never complete without lipstick!"
+    pr "Lucky for you, I’ve got just the thing!"
+
+    "She pulls out a lipstick bullet from the nearby vanity—one that matches the shade on her lips perfectly."
+    pause 0.85
+
+    show princess lipstick with dissolve
+
+    mc "Isn’t this {i}your{/i} colour? Are you sure it matches me?"
+
+    "The Princess' lips twist into a wicked smile."
+
+    pr "{i}Ours{/i} now."
+
+    pause 0.85
+    show princess lipstick_smear with dissolve
+
+    #SFX: PUTTING ON LIPSTICK
+
+    pr "Perfect." 
+    pr "Aren’t you glad you decided to stay~?"
+    pr "There’s absolutely no reason to be elsewhere!"
+
+    hide princess
+    show mc princess_3 at princess_filter 
+    with dissolve
+
+    mc "You’re right!"
+    mc "It’s so nice here, I can’t imagine why I’d want to go back to that tiny, cramped apartment."
+
+    hide mc
+    show princess smile_both_hands with dissolve
+
+    mc "Thank you so much, your Highness. I really appreciate everything!"
+    mc "I hope my time here will let me grow to be just like you."
+    mc "(Just like I always dreamed of.)"
+
+    show princess surprise_both_hands
+    "You smile at the Princess, watching your own smile reflected back in her face."
+    mc "(No wonder the mirror wasn't necessary anymore!)"
+
+    mc "What’s next then?"
+
+    show bg castle_interior_coveredmirror_darkest with dissolve
+    hide princess with dissolve
+
+    pr "Oh, we still have much left to do!"
+    pr "Let’s make sure we fix those pesky, sad, and gray eyebags you have." 
+    pr "Maybe sharpen those cheekbones!"
+
+    #SFX: VERY CONCERNING SOUND EFFECTS LIKE GO CRAZY PUT CONSTRUCTION SOUNDS FOR ALL I CARE PUT A BUZZSAW
+    show text "SFX: VERY CONCERNING SOUND EFFECTS LIKE GO CRAZY PUT CONSTRUCTION SOUNDS FOR ALL I CARE PUT A BUZZSAW" with flash_princess
+
+    pause 2.0
+    show princess surprise_one_hand with dissolve
+    pr "Anything less than perfection is not acceptable!"
+    pause 1.0
+    show princess neutral with dissolve
+    pause 1.5
+
+    show mc princess_4 at princess_filter with dissolve
+
+    mc "Whatever you say!" 
+    mc "We have all the time in the world here now."
+
+    pause 2.5
+    
+    scene bg end_frame_nocrack with fade
+    pause 0.85
+    show bg end_frame_crack with flash_princess
+    show text "\"THE FAIREST OF THEM ALL\""
+
+    "The End{w=1.5}...?"
+
+    return
 
 label teddy_route_8:
-    "Are you sure?"
+    scene bg green_wonderland with fade
+
+    mc "(Shoot, where did he go?)"
+    mc "TEDDY?"
+    mc "Teddy! I'm back, let's play!"
+
+    "You spot him at the bottom of one of the hills, slumped down on the grass."
+    show bg green_wonderland_dark with dissolve
+    mc "Huh? Is he... {w=0.5}crying?"
+
+    "You take a careful step in his direction, careful not to startle him, and hear his sobs grow clearer."
+    show teddy frown_tilt with dissolve
+
+    td "[player_name] is taking so long..."
+    td "I bet she's not even coming back, is she?"
+
+    "Unsure of what to say, you stay back and let him cry it out for a second."
+    "Unfortunately, the longer you wait, the more upset he seems to become."
+
+    show bg green_wonderland_twisted_dark
+    show teddy crying
+    with dissolve
+
+    td "WAAAA! Where are youuuu, [player_name]?!?"
+    td "Did you leave me again?"
+
+    "He lets out a loud sniffle, batting at the grass with his lollipop."
+
+    td "You can have anything here! Why won’t you stay with me?!"
+    td "Look—!"
+    td "{i}SNIFFLE{/i}"
+    td "Even my tears turn into candy when I'm sad, \nso nothing stays forever bad!"
+
+    td "So why didn't you come baaaaaack, [player_name]?!?! {w=0.85}WAAAAAA"
+
+    "Teddy’s high-pitched cries cut through the air, accompanied by the soft clinks of candy falling to the ground."
+    
+    hide teddy with dissolve
+    show bg green_wonderland_dark with dissolve
+    mc "Teddy..."
+    
+    "You watch your old friend with an almost fond exasperation, shaking your head as you slowly make your way closer to him."
+
+    mc "(Some things never change, huh? You're still a total crybaby.)"
+
+    show bg green_wonderland with dissolve
+
+    mc "Hey! Teddy!"
+    "You wave wildly in the air as you jog over to his side."
+
+    "Teddy immediately perks up, his frown turning upside-down as he floats up from his spot on the grass."
+
+    show teddy smile_tilt with dissolve
+    td "[player_name]?!"
+
+    "Both memories of your old friend and Teddy's infectious excitement in this moment tug at your heartstrings."
+    "The scent of sweetness draws you closer and closer, and you can feel your own smile grow childlike alongside Teddy's." 
+
+    td "Yippee!"
+    td "You finally came back! I knew you would!"
+
+    mc "(...Right.)"
+    mc "Of course I did! I pinky-promised, didn't I?"
+
+    show teddy smile with dissolve
+    td "That's right!"
+    td "Now we can play together forever and ever!!!"
+
+    "You laugh, patting him on his soft, plush head."
+    mc "Forever's a pretty long time, Teddy, but I suppose I can stay a bit longer."
+
+    show teddy neutral
+    td "Yeah, yeah, but you've gotta stick around for a long while."
+    td "You can have anything here! It's always so bright and beautiful!"
+    td "Plus, you'll never grow old with all this—"
+
+    show teddy candy_hands with flash_teddy
+    pause 0.5
+    td "CANDY!"
+    
+    hide teddy
+    show bg green_wonderland_dark 
+    with dissolve
+    "You watch in astonishment as Teddy tosses heaps of candy in your direction, watching them land at your feet."
+    
+    mc "That's... {w=0.75}real candy...!"
+
+    show teddy neutral with dissolve
+    td "Duh. Obviously it's real candy, [player_name]."
+    td "What's the point of fake candy?"
+
+    "You bite back the urge to ask him if he can even eat candy."
+    "Instead, you pick catch a piece, unwrapping it and plopping it into your mouth."
+
+    mc "...!"
+
+    "The taste of citrus and sugar greet your tastebuds, and you turn to Teddy with wide eyes."
+
+    show bg green_wonderland
+    mc "This is the best orange candy I've ever had!"
+
+    show teddy smile with dissolve
+    td "I know right?!"
+    td "And the best part is: {w}I never run out, it's an endless supply!"
+
+    "You quirk an eyebrow up at him as you unwrap another piece."
+    show teddy neutral
+
+    mc "For free?"
+    mc "How does that even work?"
+
+    show teddy neutral_tilt with dissolve
+    "He shrugs, not even sparing a first thought, let alone a second."
+
+    td "I dunno. But does it matter?"
+
+    show bg green_wonderland_dark 
+    show teddy neutral 
+    with dissolve
+    "The simplicity with which he says that has you pondering on it for a second."
+
+    mc "(Well, it's not like there are shops or credit card debt here anyway.)"
+    mc  "(And if Teddy has an endless candy supply, who am I to deny the magic, right?)"
+
+    show bg green_wonderland with dissolve
+    mc "Huh. I guess not."
+
+    show teddy smile with dissolve
+    td "That's right! You don't have to worry about any of that boring adult stuff here with me."
+    show teddy smile_tilt with dissolve
+    td "So just come play with me for a bit longer!"
+
+    show teddy neutral_tilt
+    show bg green_wonderland_dark with dissolve 
+    "You feel the grin forming on your lips as you watch Teddy's expectant expression."
+    mc "(You've always been impossible to say no to, huh, Teddy?)"
+
+    show bg green_wonderland with dissolve
+    mc "Oh, alright, fine! I'll play hooky with you today."
+    mc "They probably won't even miss me at work today. I mean, I sure aren't!"
+    
+    show teddy smile with dissolve
+    "You laugh with Teddy as you spit out those words, your shoulders feeling lighter than you have in years."
+
+    mc "Yeah... {w}screw work!"
+    mc "I hate that place anyway! Screw taxes and all that!"
+
+    td "Yeah, screw it! Who cares?!"
+    "His laughter rises as he copies you, throwing adult responsibilities he probably does not have to the wind."
+    "You can't help but simply laugh along with him, letting the wind carry your worries away in the sweet, sweet air."
+  
+    scene shot teddy_1 with fade
+    "Time flies when you're with Teddy, lively days blending into beautiful nights."
+
+    td "Even the sky changes whenever you want!"
+    td "With some practice, I'm sure you'll be able to float just like me and reach for the stars."
+
+    mc "I don't know about that one, Teddy."
+    mc "I don't think I have the same powers you do. I'm not special, or anything."
+
+    td "WRONG!"
+
+    mc "Huh?"
+
+    td "Not with {i}that{/i} attitude, you won't!"
+    td "You just have to {i}believe{/i}, [player_name]."
+    td "That's the magic of this place!"
+
+    "He whirls around in the air, stopping to pose and point at the night sky."
+
+    td "There's no real sun to tell you you're late, or make you feel tomorrow creeping up."
+    td "Time never has to move forward again, if you don't want it to!"
+    
+    "He turns to you once more, taking your hand as he begins to float up higher."
+
+    td "So if you wanna fly—"
+    td "FLY!"
+
+    "You let him whisk you off, laughing as you run alongside him."
+    mc "(The way he speaks and the words he says...)"
+    mc "(It's straight out of a storybook.)"
+
+    "You allow yourself one last wistful breath before you let the moment sweep you light off your feet."
+
+    scene shot teddy_2 with fade 
+
+    # SFX:  CHILD LAUGHING SUBTLE
+    show text "SFX: CHILD LAUGHING SUBTLE"
+
+    td "Aren't they pretty, [player_name]?"
+    td "All these flowers are ours too!"
+    td "We can make flower crowns just like we used to, and eat candy until our bellies ache without a care in the world."
+    
+    mc "That sounds awesome, Teddy!"
+
+    td "Yeah it does! Every day of the week, all the time!"
+
+    mc "Yeah..."
+    mc "Every day..."
+
+    "And true to your promises, you do so."
+    "Day after day."
+    "After day."
+    "{w=2}After... {w}\nday."
+
+    #Boredom begins to seep into the crevices of your mind.
+
+    scene shot teddy_3 with fade
+    # SFX: CHILD LAUGHING MORE
+    show text "SFX: CHILD LAUGHING MORE"
+
+    td "What are you waiting for, [player_name]?!"
+    td "Let's go to more places! The further we go, the more fun we have!" 
+    td "You wouldn't wanna go back to all that stuff from outside, right? Like before?"
+    td "Blegh!" 
+
+    "You muster up a smile for Teddy, but it doesn't quite reach your eyes."
+    "Or at least, you don't think it does."
+    "It's been a while since you've fixed yourself up for work in front of the mirror."
+
+    mc "Sorry, Teddy. I must've zoned out for a second there."
+
+    "You follow him through the land as per usual, but find that your mind is elsewhere today."
+
+    mc "(...When {i}is{/i} today?)"
+
+    "You wonder how much time has passed as Teddy takes you across the peaks and valleys you've now grown used to."
+    "It's uncertain whether the it's the day or the scenery itself that's lost its luster, but amidst the strange flatness of it all, you can't help but wonder..."
+
+    mc "(What would happen if I told Teddy \"no\" for once?)"
+    mc "(What would I even do if I'm not playing along with our game anymore?)"
+
+    "Though you voice none of these concerns, Teddy remains as perceptive as ever."
+    
+    td "Hey, why'd you stop smiling, [player_name]?"
+    
+    mc "I'm sorry, Teddy. Head in the clouds today, I guess."
+
+    "Teddy huffs, button eyes twisting with frustration."
+
+    td "You're zoning out a lot today, [player_name]!"
+    td "We're supposed to be playing together!"
+
+    mc "I know, I'm so—"
+
+    td "No, you're not! And it's not fair!"
+    td "Who else is gonna play with you, huh?!"
+    td "Your dead cat?!"
+
+    "You're taken aback by his outburst, but its those words specifically that hit way too close for comfort, even with Teddy."
+
+    mc "Hey! Don't you talk about Charlie like that!"
+
+    td "Charlie this, Charlie that!"
+    td "I'm so sick of that stupid cat, he's not even here!"
+    td "Just forget about Charlie already, [player_name]!"
+
+    "You feel your world slowly go white with anger as Teddy rattles on."
+
+    mc "Teddy, that's ENOU—"
+
+    td "No! You've been like this every day!"
+    
+    "He takes your hand and begins dragging you along the trail before you can react."
+
+    td "So, y'know what? Come with me!"
+    td "I'll find you a new Charlie."
+    td "TEN new Charlies, if you want!"
+    td "Then we can finally go back to playing together!"
+    td "{w=1.5}Just like you promised."
+
+    scene shot teddy_4 with fade
+
+    "Day after day drones on."
+    "You sincerely hope they do, at least."
+    "Nowadays, it's impossible to tell if even the sunrise or sunset is real."
+    "It's only the same games, in the same places, every single minute of every hour of every would-be day."
+
+    td "Why don't you want to play with me anymore?!"
+    td "I thought you wanted to forget all that stupid adult stuff and have fun all day long."
+
+    mc "(...)"
+
+    "You stare at Teddy, lips parted but unable to croak out a sound."
+    "Talking to him has gotten harder and harder."
+    "You watch him drone on and on, but it's as if you can't tell where you end and this world around you begins."
+
+    td "I gave you everything so you wouldn't have to go back to your miserable, boring life, and you're still acting like a baby!"
+
+    "You'd laugh at his temper tantrum, if you could."
+    "But you feel nothing but {i}stuck{/i}."
+    "In place.{w}\nIn time.{w}\nIn this world."
+
+    "So you stay and listen."
+
+    td "See! No one CARES."
+    td "Look around you, [player_name]!"
+    td "Nobody wants a washed-up grownup who can't keep up with life anymore just because you had no other friends but your cat."
+    
+    "Forever,"
+
+    td "You're ruining everything just like you always do!"
+
+    "and ever,"
+
+    td "No wonder you have nobody."
+    td "If I wasn't here with you, you'd be all alone again."
+
+    "and ever."
+
+    pause 2.5
+    
+    scene bg end_frame_nocrack with fade
+    pause 0.85
+    show bg end_frame_crack with flash_teddy
+    show text "\"FOREVER IN EVERLAND\""
+
+    "The End{w=1.5}...?"
+
+    return
+
+
 
 label charlie_route_8:
-
     "Are you sure?"
-            
+
 
     return
