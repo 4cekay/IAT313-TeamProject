@@ -1,12 +1,17 @@
 # Initialization 
 init python:
     princess_name = "Posh Voice"
-    doll_name = "Doll Kid"
+    doll_name = "Childish Voice"
     cat_name = "Alley Cat"
 
     charlie_bad_1 = False
     charlie_bad_2 = False
     charlie_bad_3 = False
+
+    # Flash Transition
+    flash = Fade(0.1, 0.0, 0.25, color="#fff")
+    flash_princess = Fade(0.05, 0.0, 0.25, color="#fffad556")
+    flash_teddy = Fade(0.05, 0.0, 0.15, color="#93e8ff56")
 
 
     # Transition Credits: https://lemmasoft.renai.us/forums/viewtopic.php?t=69087
@@ -24,13 +29,16 @@ define td = Character ("[doll_name]")
 
 define ch = Character ("[cat_name]")
 
-# Effects Setup
-define flash = Fade(0.1, 0.0, 0.25, color="#fff")
-
-
 # Assets Setup
 image shot cat_food = Transform("/beginning_scenes/shot cat_food.png", xsize=1920, ysize=1080)
+image bg street_blurry = Transform("/backgrounds/bg street_blurry.png", xsize=1920, ysize=1080)
 image bg blue_wonderland_dark = Transform("/backgrounds/bg blue_wonderland_dark.png", xsize=1920, ysize=1080)
+image bg castle_exterior = Transform("/backgrounds/bg castle_exterior.png", xsize=1920, ysize=1080)
+image bg castle_exterior_dark = Transform("/backgrounds/bg castle_exterior_dark.png", xsize=1920, ysize=1080)
+image bg castle_interior_coveredmirror = Transform("/backgrounds/bg castle_interior_coveredmirror.png", xsize=1920, ysize=1080)
+image bg castle_interior_coveredmirror_dark = Transform("/backgrounds/bg castle_interior_coveredmirror_dark.png", xsize=1920, ysize=1080)
+image bg green_wonderland = Transform("/backgrounds/bg green_wonderland.png", xsize=1920, ysize=1080)
+image bg green_wonderland_dark = Transform("/backgrounds/bg green_wonderland_dark.png", xsize=1920, ysize=1080)
 
 
 # Startup Sequence
@@ -780,52 +788,443 @@ label meeting_princess_6:
 
     scene bg blue_wonderland_dark with eyesopen
     pause 1.0
-    show princess smile_both_hands with dissolve
+    show princess surprise_both_hands with dissolve
     pause 1.0
 
     $ princess_name = "???"
 
-    "Scrambling up, you're met with the sight of a princess—a real life princess—towering over you with her, looking down with a curious glint in her eye."
-    "You do a double take, glancing behind you before realizing that by \"adorable thing\", she meant {i}you{/i}." 
-
-    mc "(Poofy dress, {w=0.5}perfect hair, {w=0.5}shoes worth more than my apartment, probably.)"
-
-    "You suddenly feel {i}very{/i} self-conscious.\nAnd a little starstruck."
-
-    mc "...You're a princess. Like a {i}Princess{/i} princess."
-
+    $ princess_name = "Princess"
     "She laughs at your astonishment, helping you up."
     show princess neutral with dissolve
 
-    mc "(God, even her laugh is melodic.)"
-    mc "(Do you think she can talk to birds? {w}Should I ask?)"
+    "Looking up, your eyes get lost in a golden-crowned whirlwind of flouncy pink standing above you."
 
-    "Dusting yourself off, you realize that your hand had slipped from Charlie's."
+    mc "(Is that really a princess?)"
+    mc "(Even her laugh was melodic.)"
+    mc "(Do you think she can talk to birds?){w}\n(Should I ask?)"
 
-    mc "Oh, you mentioned a cat. Charlie, do you know—"
+    $ princess_name = "Princess"
 
-    "You turn back to Charlie, who may as well have vanished into thin air."
+    show princess surprise_one_hand with dissolve
 
-    mc "Charlie?"
+    pr "It isn’t often I find a poor, unfortunate, lost soul just lying on the ground so close to my castle!"
 
-    pr "Hm? Are you looking for someone?"
+    show princess smile_one_hand
+    pr "What brings you here then?"
+
+    "You do a double take, glancing behind before realizing that she's been talking about {i}you{/i}." 
+
+    mc "Me? Uh, I..."
+    mc "Oh, wow. You’re really pretty."
+    
+    pr "Naturally! Anything less than perfection is hardly worth the effort, no?"
+
+    pr "However did you make it here in such a state anyway? You'd never have been permitted past my gates, you poor thing."
+    
+    show princess neutral
+    scene bg castle_exterior_dark with dissolve
+    
+    "Suddenly feeling even more out of place, you scramble up, dusting yourself off. You eye the massive pink doors looming above you."
+
+    scene bg castle_exterior with dissolve
+
+    pause 1.0
+    
+    mc "I don’t really know myself, I was just with a friend and—"
+
+    "You finally realize that your hand had slipped from Charlie's and turn back."
+
+    # show bg 
+
+    "He may as well have vanished into thin air."
 
     mc "I— He was right here, I don't underst—"
 
-    "The Princess chuckles and pats you on the head."
+    show princess surprise_one_hand
+    pr "A friend! My, how quaint!" 
 
-    pr "That's no matter, sweetie."
-    pr "Lucky for you, you just met the only one you'll need from now on!" 
-
-    "Her tone is so lighthearted, it's almost too easy to overlook how creepily those words could be taken."
-
-
-
+    show princess surprise_both_hands with dissolve
+    pr "Who might that be? Everyone who resides here is, of course, acquainted with me, so I daresay I'll have met them."
     
+    show princess smile_one_hand with dissolve
+    "The princess leans down, very close, head tilted as she smiles and waves a graceful hand."
+
+    mc "It's alright. I'm sure they're fine."
+    mc "{w=1.0}(Okay, she’s a little close.)"
+    
+    show bg castle_exterior_dark with dissolve
+    show princess neutral
+    pause 0.75
+    mc "(Her smile though... From here, it feels almost familiar...)"
+    
+    show princess smile with dissolve
+    pr "If you say so~"
+
+    show bg castle_exterior with dissolve
+    show princess smile_both_hands
+    pr "Well anyhow, no need to dwell on that insignificant nonsense now that you’ve met the only one you'll ever need around here!"
+
+    show princess surprise_one_hand with dissolve
+    pr "Now, first order of business, we must get you out of those rags!"
+    
+    mc "({i}Rags?{/i})"
+
+    "You look down at yourself."
+
+    show princess neutral_one_hand with dissolve
+    mc "(I guess I must seem like a beggar in comparison, huh? Her shoes alone are probably worth more than my entire lifestyle.)"
+    mc "I didn’t bring a change of clothes."
+    
+    show princess surprise_both_hands with dissolve
+    "The princess gives a high, tinkling laugh in response."
+    
+    pr "Aren't you lucky to have run into me, then!"
+
+    show princess smile_one_hand with dissolve 
+    pr "No need to worry your little self about that."
+    pr "You'll be coming to join me in the castle. We'll get you fixed up right away."
+    
+    show princess neutral with dissolve
+    mc "(Is there really time for this? I need to find Charlie.)"
+    mc "That's very kind of you, but I really should go check on my friend."
+
+    "You pull your gaze away from hers as you move to leave."
+
+    hide princess with dissolve
+    show bg castle_exterior_dark with dissolve
+    pause 1.5
+
+    show bg castle_exterior with flash_princess
+    # SFX : SUDDEN FOOTSTEP
+    pr "Oh, there's no need to concern yourself with all that!"
+
+    show princess smile_both_hands with dissolve
+    pr "I can handle it all. After all, I do know everyone who knows everyone around here!"
+
+    show princess surprise_one_hand with dissolve
+    pr "Aaaaand I'm an exceptionally generous host! You'll be fed, watered, and dressed in something far more suitable, with a touch of sparkle to finish."
+    show princess smile_both_hands 
+    pr "I’ve a lovely ensemble and jewelry that would suit you perfectly!"
+
+    show bg castle_exterior_dark with dissolve
+    mc "(I don’t even remember the last time I was given a gift...)"
+
+    show princess neutral with dissolve
+    mc "(But she’s so pink and sparkly. I could never pull off her kind of clothing.)"
+    mc "{w=1}(...Would be nice to see what she means though, maybe.)"
+
+    show bg castle_exterior with dissolve
+    mc "That sounds lovely, but maybe after I—"
+
+    show princess angry with dissolve
+    "The Princess' face darkens slightly before she huffs and begins to turn away."
+    pause 0.75 
+
+    show bg castle_exterior_dark with dissolve
+    pr "Honestly, turning down royalty?"
+    pr "How unbecoming."
+
+    # SFX: A COUPLE FOOTSTEPS, AWAY FROM YOU
+    pause 1.0
+    show princess neutral_one_hand with dissolve
+    pr "But because I'm true to my word, as your {i}gracious{/i} host,{w=0.75}\nand only friend in sight, really,{w=1}\nI'll get everything ready for when you get tired of walking around in {i}all that{/i} and come knocking."
+    
+    show princess surprise with dissolve
+    pr "You best make up your mind quickly, though!"
+
+    hide princess with dissolve
+    show bg castle_exterior with flash_princess
+    "She swivels toward the castle entrance, not even sparing another glance over her shoulder."
+    
+    pr "Use the door knocker once you've come to your senses and someone will come fetch you."
+    pr "Ta ta~!"
+
+    # SFX: CASTLE DOORS SLAM SHUT
+    "The princess saunters back into the castle, humming as the doors slam shut behind her."
+
+    mc "{w=1.0}(...Rich people.)"
+
+    jump meeting_teddy_7
+
+label meeting_teddy_7:
+
+    scene bg blue_wonderland_dark with fade
+    "After that unsolicited encounter with the land's reigning primadonna, you find yourself back on one of the paths, picking some lint off of your clothes."
+
+    # SFX: FOOSTEPS
+
+    mc "(Fine, maybe I haven't done laundry in a while, but surely these are a step above {i}rags{/i}...)"
+
+    "You shake your head away from useless thoughts, bringing your attention back up to the scenery before you."
+    show bg blue_wonderland with dissolve
+
+    mc "(If I was a magical spirit cat, where would I go to hide from a sparkly princess?)"
+
+    mc "Charlie?"
+
+    # SFX: FURTHER FOOTSTEPS
+
+    mc "CHAR{w=0.5}-LIEEEEEE!"
+
+    "You give a few sheepish looks to a couple toffee-looking squirrels that startle at your hollering."
+
+    mc "Sorry. I'm just looking for my friend, you see."
+    mc "Maybe you know him?"
+    mc "About yay high, {w}\nmay or may not be cloaked, {w}\nprobably skulking about in the shadows?"
+
+    "In your futile attempts at gathering clues from the nearby fauna, you don't notice the next unlucky obstacle until it's too late."
+
+    show black with flash
+    mc "Oof!"
+
+    "It sends you stumbling back, though luckily whatever {i}it{/i} was happened to be soft and squishy enough to keep you on your feet this time."
+    show bg blue_wonderland_dark
+    hide black with dissolve
+
+    mc "(I swear that wasn't there before.)"
+    mc "(...Wait, what did I just bump into?)"
+    mc "I don't feel a bruise forming so it couldn't have been one of those lollipop trees-"
+
+    show teddy sprite with flash_teddy
+    td "Sorry ma'am!"
+
+    $ doll_name = "Floating Doll Kid?!"
+    mc "AHHHHH!"
+
+    show teddy frown_tilt with flash_teddy
+    td "AHHHHH!"
+
+    "You nearly trip over your own feet backing away from the {i}armed and floating doll{/i}, who in fairness, seems equally frightened by your scream."
+
+    show bg blue_wonderland with dissolve
+
+    mc "Floating! You—"
+    mc "Why are you floating?!"
+
+    show teddy frown with dissolve
+    td "Hey! It's not nice to ask why someone's floating!"
+    td "It's not like I ask why you're {i}walking!{/i}"
+
+    "You stammer, wracking your headd for a retort, but find yourself too astonished by the bizarre boy before you."
+
+    show teddy smile with dissolve
+    td "But it's okay! Everyone makes mistakes, and I'd rather make a new friend today!"
+
+    show bg blue_wonderland with dissolve
+    td "I'm Teddy! What's your name?"
+
+    $ doll_name = "Teddy"
+
+    show teddy neutral_tilt with dissolve
+    "He examines you with two unmistakeably button eyes."
+
+    td "You know, you kinda look like this other lady I see around sometimes."
+    td "But she's always wearing these big, poofy clothes so I don't think she even sees me most days."
+
+    "Though he doesn't give a name, you have an inkling you know precisely who he's referring to."
+
+    mc "I doubt she'd agree, but thanks, I guess."
+    mc "I'm uh—"
+
+    "You awkwardly withdraw what was supposed to be a handshake, settling for a little wave instead."
+
+    mc "I'm [player_name]."
+
+    show teddy smile with dissolve
+    "The doll boy brightens instantly at your name, floating to your side to join you down the paths."
+
+    # SFX: CONTINUE WALKING
+
+    show bg wonderland with dissolve
+    td "Wow! I had a friend named [player_name] too!"
+
+    show teddy frown with dissolve
+    td "I haven't seen her in so long, though. I wonder if she even remembers me..."
+
+    "Just as animatedly, he deflates, floating ever-so-slightly slower beside you."
+
+    show bg wonderland_dark with dissolve
+    show teddy frown_tilt with dissolve
+    mc "It's almost funny, his little frown looks just like..."
+
+    "You chuckle to yourself, squinting at Teddy and his stitched pout."
+    
+    mc "You remind me a lot of a friend I used to have, too."
+    mc "His name was Theodore, but everyone also called him Teddy."
+    mc "He was my next-door neighbour, and my best friend."
+
+    show bg wonderland with dissolve 
+    show teddy smile with dissolve
+    td "No way, me too!"
+    show teddy frown
+    td "But I like \"Teddy\" way better. \"Theodore\" sounds like it's for grown-ups, yuck!"
+
+    "You can't help but giggle at his childish response."
+
+    show teddy neutral with dissolve
+    mc "(Teddy used to say the exact same thing, what are the odds?)"
+    
+    "You shake your head fondly at the memory of teasing your childhood friend relentlessly."
+    "It would be too easy to get lost in nostalgia if it wasn't for this Teddy."
+
+    show teddy frown_tilt 
+    td "Don't laugh at me! You're just like my friend, Gwen!"
+
+    scene bg wonderland_dark with flash_teddy
+    "Something about his whiny tone rings more than a few bells."
+
+    mc "(For a second there, I swear I heard...)"
+
+    show teddy frown with dissolve
+
+    "You stop walking, cocking your head and squinting at the Teddy floating in place."
+
+    mc "(Y'know... Teddy also had ginger hair.)"
+    mc "(And blue eyes.)"
+    mc "(And that exact same pout.)"
+    
+    show teddy neutral with dissolve
+    "You take a single step towards him, trying to connect the dots."
+
+    mc "You couldn't be... right?"
+
+    show teddy neutral_tilt with dissolve
+    mc "...{w=1}Teddy?"
+
+    td "[player_name]?"
+
+    mc "(If it's possible for Charlie to be here, then what are the odds that—)"
+
+    show teddy neutral with dissolve
+    mc "Do you still remember me? [player_name]?"
+    mc "I think I might be the [player_name] you knew before too."
+
+    mc "It's just been so long... I haven't seen my Teddy since we were 8, when he moved away."
+    mc "Which is why you might not recognize me now, hah!"
+
+    "A familiar ache builds up in your throat as you continue with a slight quiver."
+
+    mc "I grew up!"
+    show teddy frown with dissolve
+    mc "But I'm still the same [player_name], I promise."
+    mc "And I'd never forget you, Teddy."
+
+    show teddy frown_tilt with dissolve
+    "You wait for the recognition to arrive on Teddy's face as he peers down at you from where he floats."
+    
+    "After some grueling moments, his face lights up with the same childlike wonder as earlier."
+
+    show bg wonderland with dissolve
+    show teddy smile with dissolve
+
+    td "No way! [player_name]! It really is you!"
+
+    "You smile away the tears beginning to form in your eyes."
+
+    mc "So you recognize me?"
+    mc "It's really you?"
+
+    show teddy smile_tilt with dissolve
+    td "Of course I do, and of course it is!"
+
+    "He begans to float ahead of you in excitement, looking around from side-to-side."
+
+    show teddy neutral_tilt
+    td "Do you see any other \"me\"'s around here, huh?"
+
+    show teddy smile with dissolve
+    td "I missed you so much!"
+
+    mc "I missed you more!"
+    
+    "You can't help the childlike huff that escapes you."
+
+    mc "You promised to write me! I never heard from you again!"
+    
+    show teddy frown with dissolve
+    td "I'm sorry, [player_name]. I guess things got in the way, huh..."
+
+    "Something about that line tugs at your chest, but you shove it aside."
+
+    show teddy smile
+    td "But not anymore!"
+
+    mc "What do you mean?"
+
+    td "Now that you're here, we can make up for all that lost time!"
+
+    show teddy neutral with dissolve
+    "Teddy develops a mischievous grin that dispels any lingering doubt you may have had."
+
+    td "Starting..."
+    pause 1.25
+
+    show teddy candy_hands with flash_teddy
+    td "Now!"
+
+    hide teddy with dissolve
+    "And just like when you were kids, Teddy takes off without warning, leaving you to catch up with him."
+
+    mc "H-Hey! No fair, you got a headstart, cheater!"
+
+    "You chase after him without a second thought."
+
+    scene bg green_wonderland with fade
+
+    mc "(Finally...)"
+
+    menu: 
+        "Gotcha!":
+            show bg green_wonderland_dark
+            show teddy frown_tilt with flash_teddy
+            pause 0.75
+
+            show teddy smile with dissolve
+            "Teddy yelps as you tag him, before dissolving into deeply contagious laughter."
+            mc "(I haven't laughed like this in forever...)"
+
+    td "Aw, man! You win!" 
+    td "I demand a rematch!"
+
+    "Still catching your breath, you smile up at him with a sorry expression."
+
+    mc "I don't know about that one, Teddy."
+    show teddy frown with dissolve
+
+    mc "This was fun, but I still have to go find Charlie, then get to work somehow."
+    mc "(If I still have a job after this...)"
+
+    td "Oh, work shmwork! You're such a grown-up now, what happened to my fun friend, [player_name]?"
+
+    show teddy frown_tilt with dissolve
+    td "Remember when you'd come over and play? It would always cheer you up!"
+    td "You look so tired now...{w}and I missed you!"
+    td "So just one more game? {w=0.75}{i}Pleeeeease?{/i}"
+
+    "You take a deep breath, willing yourself not to give in to Teddy's pleading eyes, before a shuffling in your periphery catches your attention."
+
+    jump point_of_no_return
+    
+label point_of_no_return:
     
 
-[MC] is in awe, starstruck until the figure notices her and approaches. Upon closer inspection, the she finds her own face smiling down at her. 
 
-[PRINCESS] passive-aggressively comments on [MC]’s appearance, saying she could make a fixer-upper out of her. 
+    menu: 
+        "meeting_teddy_7":
+            jump meeting_teddy_7
+        "princess_route_8":
+            jump princess_route_8
+        "teddy_route_8":
+            jump teddy_route_8
+        "charlie_route_8":
+            jump charlie_route_8
+
+label princess_route_8:
+
+label teddy_route_8:
+
+label charlie_route_8:
+
+            
 
     return
